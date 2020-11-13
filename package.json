@@ -1,0 +1,46 @@
+{
+  "name": "js-libp2p-template",
+  "version": "0.1.0",
+  "description": "A basic repo template for javascript libp2p.",
+  "main": "src/core/index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vaultec81/js-libp2p-template.git"
+  },
+  "author": "vaultec81",
+  "license": "MIT",
+  "dependencies": {
+    "@hapi/hapi": "^19.1.1",
+    "datastore-fs": "^0.9.1",
+    "datastore-level": "^0.14.1",
+    "debug": "^4.1.1",
+    "dlv": "^1.1.3",
+    "hapi-pino": "^8.0.0",
+    "ipld-dag-cbor": "^0.17.0",
+    "it-pushable": "^1.4.0",
+    "libp2p": "^0.29.2",
+    "libp2p-bootstrap": "^0.12.1",
+    "libp2p-gossipsub": "^0.6.4",
+    "libp2p-kad-dht": "^0.20.1",
+    "libp2p-mdns": "^0.15.0",
+    "libp2p-mplex": "^0.10.1",
+    "libp2p-noise": "^2.0.1",
+    "libp2p-tcp": "^0.15.1",
+    "libp2p-tls": "^0.1.0",
+    "libp2p-webrtc-star": "^0.20.1",
+    "merge-options": "^2.0.0",
+    "protons": "^2.0.0",
+    "uri-to-multiaddr": "^3.0.2",
+    "wrtc": "^0.4.6",
+    "yargs": "^15.3.1"
+  },
+  "devDependencies": {
+    "mocha": "^7.2.0"
+  },
+  "bin": {
+    "MyProjectName": "src/cli/bin.js"
+  }
+}
