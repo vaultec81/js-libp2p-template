@@ -38,11 +38,10 @@ class Dialer {
                     let out;
                     if (msg.flags.includes(MessageFormat.flags.Response_type_stream)) {
                         //Packet type is iterable
-                        if(typeof this.callbacks[ret.td] === "function") {
+                        if(typeof this.callbacks[ret.tid] === "function") {
                             //Data type is iterable
                             if(msg.flags.includes(MessageFormat.flags.Response_Error)) {
                                 //Handle error on initial connection.
-                                out.push(msg.getPayload());
                                 this.callbacks[ret.tid](msg.getPayload(), null);
                                 delete this.callbacks[ret.tid];
                             } else {
@@ -53,7 +52,6 @@ class Dialer {
                             }
                         } else {
                             //Presume type is pushable
-                            this.callbacks[ret.tid].push(msg.getPayload());
                             if(msg.flags.includes(MessageFormat.flags.Response_Iterable_end)) {
                                 if(msg.flags.includes(MessageFormat.flags.Response_Error)) {
                                     this.callbacks[ret.tid].end(msg.getPayload()); //Responds with error
@@ -61,6 +59,8 @@ class Dialer {
                                     this.callbacks[ret.tid].end();
                                 }
                                 delete this.callbacks[ret.tid];
+                            } else {
+                                this.callbacks[ret.tid].push(msg.getPayload());
                             }
                         }
                     } else {

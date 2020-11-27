@@ -36,19 +36,29 @@ class Listener {
              */
             var responseCycle = async (result, chunk) => {
                 var seq = 1;
-                for await(var res of result) {
-                    var msg = MessageFormat.fromObj(chunk);
-                    seq++; msg.seq = seq;
-                    msg.type = 2; //Response
-                    msg.setPayload(res)
-                    sink.push(msg);
+                let error;
+                try {
+                    for await(var res of result) {
+                        var msg = MessageFormat.fromObj(chunk);
+                        seq++; msg.seq = seq;
+                        msg.type = 2; //Response
+                        msg.flags = [MessageFormat.flags.Response_type_stream]
+                        msg.setPayload(res)
+                        sink.push(msg);
+                    }
+                } catch (ex) {
+                    error = ex;
                 }
                 var msg = MessageFormat.fromObj(chunk);
                 seq++; msg.seq = seq;
                 msg.setPayload(null);
                 msg.flags = [
+                    MessageFormat.flags.Response_type_stream,
                     MessageFormat.flags.Response_Iterable_end
                 ];
+                if(error) {
+                    msg.flags.push(MessageFormat.flags.Response_Error)
+                }
                 sink.push(msg);
             }
             var func = (async () => {
